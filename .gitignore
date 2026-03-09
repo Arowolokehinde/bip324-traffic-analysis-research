@@ -1,0 +1,21 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Large capture files — store externally
+captures/mainnet/capture_001_allpeers.pcap
+captures/mainnet/capture_002_allpeers.pcap
+
+# Bitcoin Core data directories (never commit these)
+nodes/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Temporary files
+/tmp/
+*.log

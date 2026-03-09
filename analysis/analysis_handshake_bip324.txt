@@ -1,0 +1,113 @@
+Analyzing handshake capture: /captures/mainnet/capture_bip324_handshake.pcap
+
+Step 1: Parsing pcap with tshark...
+  Total packets in capture: 40
+  TCP SYN confirmed — initiator identified from SYN packet
+  Initiator (Node B): 68.183.7.243
+  Responder (Node A): 68.183.7.14
+
+========================================================================
+HANDSHAKE PACKET SEQUENCE  (data packets only, tcp.len > 0)
+========================================================================
+  Pkt#   Time(s)    Direction                     Frame  TCP payload
+  ------------------------------------------------------------------
+  4      0.0894     Init → Resp  (68.183.7.243)                  3850         3784
+  6      0.0897     Resp → Init  (68.183.7.14)                   2422         2356
+  8      0.0919     Init → Resp  (68.183.7.243)                   102           36
+  9      0.0986     Init → Resp  (68.183.7.243)                   201          135
+  11     0.0990     Resp → Init  (68.183.7.14)                    201          135
+  12     0.0990     Resp → Init  (68.183.7.14)                     99           33
+  13     0.0991     Resp → Init  (68.183.7.14)                     99           33
+  14     0.0994     Resp → Init  (68.183.7.14)                     99           33
+  16     0.0995     Init → Resp  (68.183.7.243)                    99           33
+  17     0.0996     Init → Resp  (68.183.7.243)                    99           33
+  19     0.1000     Init → Resp  (68.183.7.243)                    99           33
+  20     0.1002     Resp → Init  (68.183.7.14)                     96           30
+  21     0.1003     Resp → Init  (68.183.7.14)                     95           29
+  22     0.1005     Resp → Init  (68.183.7.14)                   1116         1050
+  24     0.1005     Resp → Init  (68.183.7.14)                     95           29
+  26     0.1012     Init → Resp  (68.183.7.243)                    99           33
+  27     0.1023     Resp → Init  (68.183.7.14)                   7306         7240
+  28     0.1023     Resp → Init  (68.183.7.14)                   7306         7240
+  30     0.1027     Resp → Init  (68.183.7.14)                   2556         2490
+  33     0.1038     Init → Resp  (68.183.7.243)                    96           30
+  34     0.1039     Init → Resp  (68.183.7.243)                    95           29
+  36     0.1042     Resp → Init  (68.183.7.14)                     95           29
+  37     0.1048     Init → Resp  (68.183.7.243)                  1116         1050
+  38     0.1050     Init → Resp  (68.183.7.243)                    95           29
+  39     0.1050     Resp → Init  (68.183.7.14)                    250          184
+  40     0.1065     Init → Resp  (68.183.7.243)                    95           29
+
+========================================================================
+HANDSHAKE METRICS
+========================================================================
+  Data packets total:              26
+  Data packets from initiator:     12
+  Data packets from responder:     14
+
+  First initiator packet (TCP):    3784 bytes   (frame: 3850 bytes incl. headers)
+  First responder packet (TCP):    2356 bytes   (frame: 2422 bytes incl. headers)
+  Symmetry ratio (resp / init):    0.62x
+
+  Total bytes from initiator:      5254
+  Total bytes from responder:      20911
+  Duration (first to last pkt):    17.2 ms
+
+========================================================================
+PROTOCOL FINGERPRINT COMPARISON
+========================================================================
+
+  BIP-324 / ElligatorSwift (expected)
+  ────────────────────────────────────────────────────────────
+    Init first pkt: 80–4175 bytes  →  observed 3784   [MATCH]
+    Resp first pkt: 80–4175 bytes  →  observed 2356   [MATCH]
+    Ratio (r/i):    0.02–50.0x         →  observed 0.62x   [MATCH]
+    Criteria met:   3/3   →  Verdict: CONSISTENT
+    Note: Both sides send random-sized initial data (garbage padding).
+    Note: First packet size: 64-byte key + 0–4095 random bytes + 16-byte terminator.
+    Note: Symmetric by design — ratio ≈ 1x (with wide random variance).
+    Note: Indistinguishable from obfs4 by these metrics alone.
+
+  TLS 1.3 (expected)
+  ────────────────────────────────────────────────────────────
+    Init first pkt: 200–600 bytes  →  observed 3784   [no   ]
+    Resp first pkt: 1500–10000 bytes  →  observed 2356   [MATCH]
+    Ratio (r/i):    3.00–50.0x         →  observed 0.62x   [no   ]
+    Criteria met:   1/3   →  Verdict: INCONSISTENT
+    Note: ClientHello: ~200–600 bytes (ciphers, extensions, SNI).
+    Note: Server response: ServerHello + cert chain + Finished (~1.5–10 KB).
+    Note: Highly ASYMMETRIC — responder sends 5–20x more data than initiator.
+    Note: Ratio >> 1 is the primary TLS fingerprint.
+
+  SSH (expected)
+  ────────────────────────────────────────────────────────────
+    Init first pkt: 15–55 bytes  →  observed 3784   [no   ]
+    Resp first pkt: 15–55 bytes  →  observed 2356   [no   ]
+    Ratio (r/i):    0.50–2.0x         →  observed 0.62x   [MATCH]
+    Criteria met:   1/3   →  Verdict: POSSIBLE
+    Note: First packets are plaintext version banners (~22 bytes each).
+    Note: Example: "SSH-2.0-OpenSSH_9.0\r\n"
+    Note: Immediately identifiable by content (not just size).
+
+========================================================================
+SUMMARY
+========================================================================
+  CONSISTENT     BIP-324 / ElligatorSwift (expected)
+  INCONSISTENT   TLS 1.3 (expected)
+  POSSIBLE       SSH (expected)
+
+  KEY INSIGHT:
+  The symmetry ratio is the primary discriminator between protocols:
+    BIP-324:  ratio ≈ 1x  (both sides send random-sized garbage, by design)
+    TLS 1.3:  ratio >> 1x (server sends certificate chain, much larger)
+    SSH:      ratio ≈ 1x  (but first bytes are plaintext, trivially identified)
+
+  A ratio near 1.0 with both packets in the 80–4175 byte range is
+  consistent with BIP-324 or another pseudorandom-bytestream protocol.
+  It does NOT distinguish BIP-324 from obfs4 — both are designed to
+  look like random noise with symmetric handshake sizes.
+
+  LIMITATION: A single handshake capture is suggestive but not
+  statistically conclusive. Repeat the capture multiple times to
+  confirm the pattern across different garbage lengths.
+========================================================================

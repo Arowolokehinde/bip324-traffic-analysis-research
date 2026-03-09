@@ -1,0 +1,417 @@
+Analyzing: /captures/mainnet/capture_002_mainnet.pcap
+Debug log: /tmp/debug_filtered_002.log
+
+Step 1: Parsing pcap file with tshark...
+  Found 1,250 packets in capture file
+  Capture start:  2026-03-09 07:19:11 UTC
+  Capture end:    2026-03-09 10:05:14 UTC
+  Total duration: 166.0 minutes
+
+Step 2: Extracting events from debug log...
+  Blocks in capture:              29
+    Block 939951: 07:27:15 UTC
+    Block 939952: 07:29:42 UTC
+    Block 939953: 07:37:07 UTC
+    Block 939954: 07:39:24 UTC
+    Block 939955: 07:45:01 UTC
+    Block 939956: 07:53:54 UTC
+    Block 939957: 08:00:03 UTC
+    Block 939958: 08:01:56 UTC
+    Block 939959: 08:06:34 UTC
+    Block 939960: 08:07:27 UTC
+    Block 939961: 08:11:17 UTC
+    Block 939962: 08:17:57 UTC
+    Block 939963: 08:18:34 UTC
+    Block 939964: 08:26:15 UTC
+    Block 939965: 08:26:41 UTC
+    Block 939966: 08:47:32 UTC
+    Block 939967: 08:49:37 UTC
+    Block 939968: 08:53:35 UTC
+    Block 939969: 08:55:03 UTC
+    Block 939970: 09:21:20 UTC
+    Block 939971: 09:28:39 UTC
+    Block 939972: 09:36:44 UTC
+    Block 939973: 09:45:27 UTC
+    Block 939974: 09:50:23 UTC
+    Block 939975: 09:55:53 UTC
+    Block 939976: 09:56:34 UTC
+    Block 939977: 09:59:08 UTC
+    Block 939978: 10:01:35 UTC
+    Block 939979: 10:03:36 UTC
+  Compact blocks received:        56
+  Large addr/addrv2 dumps (>1KB): 0
+  Large transactions (>10KB):    201
+
+Step 3: Computing event visibility (event second vs rolling baseline)...
+  Block arrivals (UpdateTip):
+    Occurrences:        29
+    Avg visibility r:   1428.71x baseline
+    Clearly visible (>2x baseline): 27/29
+  Compact blocks (cmpctblock):
+    Occurrences:        56
+    Avg visibility r:   1473.68x baseline
+    Clearly visible (>2x baseline): 38/56
+  Large transactions (>10KB):
+    Occurrences:        201
+    Avg visibility r:   4.27x baseline
+    Clearly visible (>2x baseline): 12/201
+
+  Compact block → UpdateTip delay (block reconstruction time):
+    Block 939951: 396 ms reconstruction time
+    Block 939952: 274 ms reconstruction time
+    Block 939953: 128 ms reconstruction time
+    Block 939954: 491 ms reconstruction time
+    Block 939955: 397 ms reconstruction time
+    Block 939956: 340 ms reconstruction time
+    Block 939957: 675 ms reconstruction time
+    Block 939958: 39 ms reconstruction time
+    Block 939959: 380 ms reconstruction time
+    Block 939960: 33 ms reconstruction time
+    Block 939961: 27 ms reconstruction time
+    Block 939962: 318 ms reconstruction time
+    Block 939963: 28 ms reconstruction time
+    Block 939964: 348 ms reconstruction time
+    Block 939965: 260 ms reconstruction time
+    Block 939966: 398 ms reconstruction time
+    Block 939967: 547 ms reconstruction time
+    Block 939968: 482 ms reconstruction time
+    Block 939969: 54 ms reconstruction time
+    Block 939970: 364 ms reconstruction time
+    Block 939971: 449 ms reconstruction time
+    Block 939972: 88 ms reconstruction time
+    Block 939973: 386 ms reconstruction time
+    Block 939974: 358 ms reconstruction time
+    Block 939975: 463 ms reconstruction time
+    Block 939976: 528 ms reconstruction time
+    Block 939977: 45 ms reconstruction time
+    Block 939978: 52 ms reconstruction time
+    Block 939979: 356 ms reconstruction time
+
+Step 4: Generating traffic plot...
+  Plot saved to: /root/P2P-traffic-Research/analysis/plots/traffic_vs_blocks_capture_002_mainnet.png
+
+=================================================================
+SUMMARY — EVENT TIMING VISIBILITY ANALYSIS
+=================================================================
+Capture file:            capture_002_mainnet.pcap
+Duration:                166.0 minutes
+Total packets:           1,250
+Total bytes:             460,141
+Avg bytes/sec:           46.2
+Max bytes/sec:           311526
+
+Block arrivals (UpdateTip) (29 events):
+  Time         Bytes@event    Baseline mean    Ratio    Visible?
+  ------------------------------------------------------------
+  07:27:15     235            10.1             23.4x    YES
+  07:29:42     235            8.5              27.5x    YES
+  07:37:07     235            12.2             19.3x    YES
+  07:39:24     235            13.2             17.7x    YES
+  07:45:01     235            10.1             23.3x    YES
+  07:53:54     235            10.7             22.0x    YES
+  08:00:03     235            10.1             23.3x    YES
+  08:01:56     235            14.0             16.8x    YES
+  08:06:34     235            365.5            0.6x     no
+  08:07:27     42297          10.2             4129.9x  YES
+  08:11:17     311526         8.5              36758.2x YES
+  08:17:57     235            13.6             17.3x    YES
+  08:18:34     235            12.3             19.1x    YES
+  08:26:15     0              15.8             0.0x     no
+  08:26:41     235            11.9             19.7x    YES
+  08:47:32     235            13.4             17.6x    YES
+  08:49:37     235            13.7             17.1x    YES
+  08:53:35     235            10.2             23.1x    YES
+  08:55:03     235            10.7             22.0x    YES
+  09:21:20     235            7.1              32.9x    YES
+  09:28:39     235            11.4             20.6x    YES
+  09:36:44     235            12.5             18.8x    YES
+  09:45:27     235            11.3             20.7x    YES
+  09:50:23     235            6.8              34.7x    YES
+  09:55:53     235            15.5             15.2x    YES
+  09:56:34     235            14.3             16.5x    YES
+  09:59:08     235            10.1             23.3x    YES
+  10:01:35     235            9.0              26.0x    YES
+  10:03:36     235            9.1              25.8x    YES
+  Average ratio: 1428.71x  |  Visible (>2x): 27/29
+
+Compact blocks (cmpctblock) (56 events):
+  Time         Bytes@event    Baseline mean    Ratio    Visible?
+  ------------------------------------------------------------
+  07:27:14     0              12.0             0.0x     no
+  07:27:15     235            10.1             23.4x    YES
+  07:29:42     235            8.5              27.5x    YES
+  07:29:42     235            8.5              27.5x    YES
+  07:37:07     235            12.2             19.3x    YES
+  07:37:07     235            12.2             19.3x    YES
+  07:39:23     0              15.2             0.0x     no
+  07:39:23     0              15.2             0.0x     no
+  07:45:00     0              12.0             0.0x     no
+  07:45:01     235            10.1             23.3x    YES
+  07:53:54     235            10.7             22.0x    YES
+  07:53:54     235            10.7             22.0x    YES
+  08:00:03     235            10.1             23.3x    YES
+  08:00:03     235            10.1             23.3x    YES
+  08:01:56     235            14.0             16.8x    YES
+  08:01:56     235            14.0             16.8x    YES
+  08:06:34     235            365.5            0.6x     no
+  08:06:34     235            365.5            0.6x     no
+  08:07:27     42297          10.2             4129.9x  YES
+  08:07:27     42297          10.2             4129.9x  YES
+  08:11:17     311526         8.5              36758.2x YES
+  08:11:17     311526         8.5              36758.2x YES
+  08:17:56     0              15.5             0.0x     no
+  08:17:57     235            13.6             17.3x    YES
+  08:18:34     235            12.3             19.1x    YES
+  08:18:34     235            12.3             19.1x    YES
+  08:26:15     0              15.8             0.0x     no
+  08:26:15     0              15.8             0.0x     no
+  08:26:40     0              13.9             0.0x     no
+  08:26:41     235            11.9             19.7x    YES
+  08:47:32     235            13.4             17.6x    YES
+  08:47:32     235            13.4             17.6x    YES
+  08:49:37     235            13.7             17.1x    YES
+  08:49:37     235            13.7             17.1x    YES
+  08:53:34     0              12.1             0.0x     no
+  08:55:03     235            10.7             22.0x    YES
+  08:55:03     235            10.7             22.0x    YES
+  09:21:19     0              9.1              0.0x     no
+  09:21:20     235            7.1              32.9x    YES
+  09:28:39     235            11.4             20.6x    YES
+  09:28:39     235            11.4             20.6x    YES
+  09:36:44     235            12.5             18.8x    YES
+  09:36:44     235            12.5             18.8x    YES
+  09:45:26     0              11.9             0.0x     no
+  09:45:26     0              11.9             0.0x     no
+  09:50:23     235            6.8              34.7x    YES
+  09:50:23     235            6.8              34.7x    YES
+  09:55:52     0              15.2             0.0x     no
+  09:55:53     235            15.5             15.2x    YES
+  09:56:33     0              16.2             0.0x     no
+  09:56:33     0              16.2             0.0x     no
+  09:59:08     235            10.1             23.3x    YES
+  09:59:08     235            10.1             23.3x    YES
+  10:01:35     235            9.0              26.0x    YES
+  10:01:35     235            9.0              26.0x    YES
+  10:03:35     0              11.1             0.0x     no
+  Average ratio: 1473.68x  |  Visible (>2x): 38/56
+
+addr/addrv2 dumps (>1KB): no events found in capture window
+Large tx (>10KB) (201 events):
+  Time         Bytes@event    Baseline mean    Ratio    Visible?
+  ------------------------------------------------------------
+  07:20:12     0              8.7              0.0x     no
+  07:21:37     0              8.4              0.0x     no
+  07:28:16     0              6.8              0.0x     no
+  07:30:18     0              10.5             0.0x     no
+  07:30:58     0              8.6              0.0x     no
+  07:31:29     0              11.8             0.0x     no
+  07:31:51     0              11.8             0.0x     no
+  07:31:58     0              11.8             0.0x     no
+  07:35:25     0              8.0              0.0x     no
+  07:40:13     169            12.2             13.8x    YES
+  07:40:46     196            8.3              23.7x    YES
+  07:40:54     0              9.9              0.0x     no
+  07:40:58     0              8.5              0.0x     no
+  07:41:02     0              8.5              0.0x     no
+  07:41:35     0              8.5              0.0x     no
+  07:41:44     0              8.5              0.0x     no
+  07:41:50     0              6.9              0.0x     no
+  07:41:59     0              8.3              0.0x     no
+  07:42:15     0              8.2              0.0x     no
+  07:42:22     0              9.8              0.0x     no
+  07:42:31     0              9.8              0.0x     no
+  07:43:38     0              9.8              0.0x     no
+  07:46:07     0              10.6             0.0x     no
+  07:46:40     0              8.8              0.0x     no
+  07:47:06     0              8.8              0.0x     no
+  07:47:52     0              8.8              0.0x     no
+  07:50:35     0              8.3              0.0x     no
+  07:50:49     0              8.3              0.0x     no
+  07:51:38     0              10.0             0.0x     no
+  07:55:11     0              6.9              0.0x     no
+  07:56:11     0              12.1             0.0x     no
+  07:56:54     0              10.6             0.0x     no
+  07:57:07     0              10.6             0.0x     no
+  07:57:26     0              6.8              0.0x     no
+  07:58:42     0              10.4             0.0x     no
+  07:59:10     0              15.7             0.0x     no
+  08:00:16     0              13.7             0.0x     no
+  08:00:49     0              15.2             0.0x     no
+  08:02:50     0              11.2             0.0x     no
+  08:03:44     0              9.2              0.0x     no
+  08:03:57     0              9.0              0.0x     no
+  08:04:55     0              10.5             0.0x     no
+  08:05:04     0              10.5             0.0x     no
+  08:05:25     0              13.6             0.0x     no
+  08:05:30     0              11.7             0.0x     no
+  08:05:44     0              13.7             0.0x     no
+  08:06:13     211            10.4             20.4x    YES
+  08:06:55     0              365.9            0.0x     no
+  08:07:23     169            361.3            0.5x     no
+  08:07:38     0              360.8            0.0x     no
+  08:08:10     0              362.2            0.0x     no
+  08:10:12     0              11.5             0.0x     no
+  08:12:33     0              8.8              0.0x     no
+  08:15:05     0              8.0              0.0x     no
+  08:15:23     0              8.0              0.0x     no
+  08:17:14     0              14.4             0.0x     no
+  08:17:57     235            13.6             17.3x    YES
+  08:18:18     0              14.3             0.0x     no
+  08:18:32     0              14.3             0.0x     no
+  08:22:55     0              12.1             0.0x     no
+  08:23:48     0              10.2             0.0x     no
+  08:27:19     0              11.9             0.0x     no
+  08:29:30     0              9.6              0.0x     no
+  08:30:24     0              4.8              0.0x     no
+  08:31:17     0              10.2             0.0x     no
+  08:33:18     0              8.5              0.0x     no
+  08:36:24     0              9.8              0.0x     no
+  08:39:42     0              9.3              0.0x     no
+  08:39:51     0              7.6              0.0x     no
+  08:40:28     0              8.4              0.0x     no
+  08:40:44     0              9.2              0.0x     no
+  08:47:22     0              13.8             0.0x     no
+  08:47:48     0              13.9             0.0x     no
+  08:49:37     235            13.7             17.1x    YES
+  08:50:07     0              14.0             0.0x     no
+  08:50:15     0              15.4             0.0x     no
+  08:51:12     578            7.3              78.6x    YES
+  08:51:38     0              8.4              0.0x     no
+  08:51:48     0              8.4              0.0x     no
+  08:53:46     0              12.1             0.0x     no
+  08:53:52     0              12.1             0.0x     no
+  08:54:18     0              14.7             0.0x     no
+  08:55:11     0              12.6             0.0x     no
+  08:55:23     0              12.6             0.0x     no
+  08:55:55     0              14.7             0.0x     no
+  08:58:10     0              6.9              0.0x     no
+  08:58:17     0              8.4              0.0x     no
+  08:58:39     0              11.8             0.0x     no
+  09:00:05     0              12.0             0.0x     no
+  09:00:13     0              17.3             0.0x     no
+  09:00:16     0              10.4             0.0x     no
+  09:00:17     0              10.4             0.0x     no
+  09:00:25     0              12.0             0.0x     no
+  09:00:25     0              12.0             0.0x     no
+  09:00:32     0              10.0             0.0x     no
+  09:00:32     0              10.0             0.0x     no
+  09:00:33     0              10.0             0.0x     no
+  09:00:34     0              10.0             0.0x     no
+  09:00:35     0              10.0             0.0x     no
+  09:00:44     0              10.0             0.0x     no
+  09:00:45     0              10.0             0.0x     no
+  09:00:45     0              10.0             0.0x     no
+  09:00:56     0              10.0             0.0x     no
+  09:01:05     0              10.0             0.0x     no
+  09:01:06     0              10.0             0.0x     no
+  09:01:24     0              11.8             0.0x     no
+  09:01:26     0              11.8             0.0x     no
+  09:02:40     0              8.6              0.0x     no
+  09:02:48     0              8.6              0.0x     no
+  09:02:57     0              10.2             0.0x     no
+  09:02:58     0              10.2             0.0x     no
+  09:02:58     0              10.2             0.0x     no
+  09:02:59     0              10.2             0.0x     no
+  09:02:59     0              10.2             0.0x     no
+  09:02:59     0              10.2             0.0x     no
+  09:03:00     0              10.2             0.0x     no
+  09:03:02     0              10.2             0.0x     no
+  09:03:07     0              10.2             0.0x     no
+  09:03:38     0              8.3              0.0x     no
+  09:04:01     0              8.3              0.0x     no
+  09:04:54     0              9.7              0.0x     no
+  09:05:08     0              8.2              0.0x     no
+  09:05:08     0              8.2              0.0x     no
+  09:05:11     0              8.2              0.0x     no
+  09:05:11     0              8.2              0.0x     no
+  09:05:12     0              8.2              0.0x     no
+  09:05:13     644            2.8              228.6x   YES
+  09:05:13     644            2.8              228.6x   YES
+  09:05:15     0              8.2              0.0x     no
+  09:05:19     0              8.2              0.0x     no
+  09:05:20     0              8.2              0.0x     no
+  09:05:31     0              8.2              0.0x     no
+  09:06:12     0              10.4             0.0x     no
+  09:06:14     0              9.9              0.0x     no
+  09:07:09     271            6.2              43.5x    YES
+  09:07:20     0              11.5             0.0x     no
+  09:09:05     0              11.4             0.0x     no
+  09:11:20     0              10.3             0.0x     no
+  09:11:23     0              10.3             0.0x     no
+  09:12:52     0              6.9              0.0x     no
+  09:20:50     0              9.1              0.0x     no
+  09:21:50     0              7.3              0.0x     no
+  09:25:34     0              7.7              0.0x     no
+  09:26:48     0              10.1             0.0x     no
+  09:29:13     644            7.8              82.9x    YES
+  09:29:13     644            7.8              82.9x    YES
+  09:30:18     0              12.8             0.0x     no
+  09:30:25     0              14.4             0.0x     no
+  09:31:12     0              14.7             0.0x     no
+  09:33:43     0              8.7              0.0x     no
+  09:36:12     0              13.0             0.0x     no
+  09:36:56     0              14.5             0.0x     no
+  09:40:40     0              10.6             0.0x     no
+  09:42:27     0              13.5             0.0x     no
+  09:43:52     0              11.6             0.0x     no
+  09:44:50     0              10.2             0.0x     no
+  09:45:29     0              13.3             0.0x     no
+  09:45:39     0              13.3             0.0x     no
+  09:45:43     0              13.3             0.0x     no
+  09:46:29     0              12.8             0.0x     no
+  09:47:07     0              10.1             0.0x     no
+  09:47:42     0              10.7             0.0x     no
+  09:49:38     0              10.1             0.0x     no
+  09:49:40     0              10.1             0.0x     no
+  09:49:52     0              10.1             0.0x     no
+  09:50:37     0              10.8             0.0x     no
+  09:50:56     0              10.8             0.0x     no
+  09:51:30     0              8.8              0.0x     no
+  09:51:33     0              8.8              0.0x     no
+  09:52:33     0              10.3             0.0x     no
+  09:53:44     0              15.0             0.0x     no
+  09:55:10     0              14.8             0.0x     no
+  09:55:31     0              14.8             0.0x     no
+  09:55:31     0              14.8             0.0x     no
+  09:55:57     0              17.5             0.0x     no
+  09:56:16     0              15.8             0.0x     no
+  09:56:49     0              13.4             0.0x     no
+  09:57:00     0              11.4             0.0x     no
+  09:58:29     0              14.6             0.0x     no
+  09:59:00     0              14.2             0.0x     no
+  09:59:51     0              10.6             0.0x     no
+  10:00:15     0              10.1             0.0x     no
+  10:00:30     0              8.2              0.0x     no
+  10:00:44     0              10.1             0.0x     no
+  10:00:47     0              10.1             0.0x     no
+  10:01:05     0              8.7              0.0x     no
+  10:01:08     0              8.7              0.0x     no
+  10:01:31     0              11.0             0.0x     no
+  10:01:44     0              13.0             0.0x     no
+  10:02:30     0              13.3             0.0x     no
+  10:02:39     239            11.3             21.1x    YES
+  10:02:51     0              13.3             0.0x     no
+  10:03:00     0              13.3             0.0x     no
+  10:03:03     0              13.3             0.0x     no
+  10:03:23     0              11.1             0.0x     no
+  10:03:25     0              11.1             0.0x     no
+  10:03:33     0              11.1             0.0x     no
+  10:03:54     0              9.1              0.0x     no
+  10:04:13     0              11.6             0.0x     no
+  10:04:34     0              11.8             0.0x     no
+  10:04:49     0              11.1             0.0x     no
+  Average ratio: 4.27x  |  Visible (>2x): 12/201
+
+Top 5 busiest seconds:
+  Time         Bytes/sec      Event at this second?
+  --------------------------------------------------
+  08:11:17     311526         Block, Cmpctblock
+  08:07:27     42297          Block, Cmpctblock
+  08:19:12     829            None
+  08:35:12     829            None
+  08:59:13     829            None
+
+NOTE: ratio > 2x means an attacker observing only encrypted traffic
+metadata could likely identify when that event occurred.
+ratio ≈ 1x means the event is indistinguishable from background.
+=================================================================
