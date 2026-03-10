@@ -191,7 +191,7 @@ and compares it against known protocol fingerprints for BIP-324, TLS 1.3, and SS
 | Protocol | First initiator pkt | First responder pkt | Ratio |
 |----------|--------------------|--------------------|-------|
 | BIP-324 | 80–4175 bytes (random) | 80–4175 bytes (random) | ≈ 1x |
-| TLS 1.3 | 200–600 bytes (ClientHello) | 1500–10000 bytes (cert chain) | 5–20x |
+| TLS 1.3 | 200–600 bytes (ClientHello) | 1500–10000 bytes (cert chain) | 3–50x |
 | SSH | ~22 bytes (plaintext banner) | ~22 bytes (plaintext banner) | ≈ 1x (but plaintext) |
 
 ---

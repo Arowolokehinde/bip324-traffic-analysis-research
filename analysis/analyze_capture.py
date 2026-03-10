@@ -31,9 +31,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-# ─────────────────────────────────────────
+
 # File paths
-# ─────────────────────────────────────────
+
 if len(sys.argv) > 1:
     pcap_arg = sys.argv[1]
     if os.path.isabs(pcap_arg) or os.path.exists(pcap_arg):
@@ -57,9 +57,9 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 print(f"Analyzing: {PCAP_FILE}")
 print(f"Debug log: {DEBUG_LOG}")
 
-# ─────────────────────────────────────────
+
 # Step 1: Parse pcap with tshark
-# ─────────────────────────────────────────
+
 print("\nStep 1: Parsing pcap file with tshark...")
 
 result = subprocess.run([
@@ -104,10 +104,10 @@ print(f"  Capture start:  {df.index[0].strftime('%Y-%m-%d %H:%M:%S UTC')}")
 print(f"  Capture end:    {df.index[-1].strftime('%Y-%m-%d %H:%M:%S UTC')}")
 print(f"  Total duration: {(df.index[-1] - df.index[0]).total_seconds() / 60:.1f} minutes")
 
-# ─────────────────────────────────────────
+
 # Step 2: Parse debug log — single pass, precompiled regex, early exit
 # Extracts: block arrivals, compact blocks, addr dumps, large transactions
-# ─────────────────────────────────────────
+
 print("\nStep 2: Extracting events from debug log...")
 
 LARGE_TX_BYTES = 10000  # bytes — threshold for "large" individual transaction
@@ -130,11 +130,11 @@ def parse_ts(ts_str):
         datetime.strptime(ts_str, '%Y-%m-%dT%H:%M:%S.%fZ').replace(tzinfo=timezone.utc)
     )
 
-past_window_count = 0  # early exit counter
+past_window_count = 0
 
 with open(DEBUG_LOG, 'r') as f:
     for line in f:
-        # Fast pre-check: skip lines that can't contain a timestamp
+        
         if len(line) < 20 or line[4] != '-':
             continue
 
@@ -183,11 +183,9 @@ print(f"  Compact blocks received:        {len(cmpctblock_times)}")
 print(f"  Large addr/addrv2 dumps (>1KB): {len(addrv2_times)}")
 print(f"  Large transactions (>{LARGE_TX_BYTES//1000}KB):    {len(large_tx_times)}")
 
-# ─────────────────────────────────────────
+
 # Step 3: Event visibility analysis
-# For each event type: is traffic at the event second distinguishable
-# from the rolling baseline? This answers the research question directly.
-# ─────────────────────────────────────────
+
 print("\nStep 3: Computing event visibility (event second vs rolling baseline)...")
 
 BASELINE_WINDOW = 60  # seconds on each side of event to compute baseline
@@ -247,9 +245,9 @@ if cmpctblock_times and block_times:
             delay_ms = (bt - closest).total_seconds() * 1000
             print(f"    Block {bh}: {delay_ms:.0f} ms reconstruction time")
 
-# ─────────────────────────────────────────
+
 # Step 4: Generate the plot
-# ─────────────────────────────────────────
+
 print("\nStep 4: Generating traffic plot...")
 
 if 'mainnet' in PCAP_NAME.lower():
@@ -269,7 +267,7 @@ fig.suptitle(
     fontsize=12, fontweight='bold'
 )
 
-# ── Top: bytes per minute ──
+#  Top: bytes per minute 
 ax1.fill_between(traffic_per_minute.index, traffic_per_minute.values,
                  alpha=0.4, color='steelblue')
 ax1.plot(traffic_per_minute.index, traffic_per_minute.values,
@@ -301,7 +299,7 @@ ax1.legend(loc='upper left', fontsize=8)
 ax1.set_title('bytes/minute — coarse view')
 ax1.grid(True, alpha=0.3)
 
-# ── Bottom: bytes per second ──
+#  Bottom: bytes per second 
 ax2.fill_between(traffic_per_second.index, traffic_per_second.values,
                  alpha=0.4, color='darkorange')
 ax2.plot(traffic_per_second.index, traffic_per_second.values,
@@ -326,9 +324,9 @@ plt.tight_layout()
 plt.savefig(OUTPUT_PLOT, dpi=150, bbox_inches='tight')
 print(f"  Plot saved to: {OUTPUT_PLOT}")
 
-# ─────────────────────────────────────────
+
 # Step 5: Summary
-# ─────────────────────────────────────────
+
 print("\n" + "="*65)
 print("SUMMARY — EVENT TIMING VISIBILITY ANALYSIS")
 print("="*65)

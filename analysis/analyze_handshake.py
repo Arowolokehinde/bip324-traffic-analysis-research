@@ -39,9 +39,8 @@ import sys
 import subprocess
 import os
 
-# ─────────────────────────────────────────
 # Input
-# ─────────────────────────────────────────
+
 if len(sys.argv) < 2:
     print("Usage: python3 analyze_handshake.py <handshake.pcap>")
     sys.exit(1)
@@ -54,11 +53,8 @@ if not os.path.exists(PCAP_FILE):
 
 print(f"Analyzing handshake capture: {PCAP_FILE}")
 
-# ─────────────────────────────────────────
+
 # Step 1: Parse all packets with tshark
-# Extract: frame number, relative time, frame length, src/dst IPs,
-#          TCP payload length, SYN flag, ACK flag
-# ─────────────────────────────────────────
 print("\nStep 1: Parsing pcap with tshark...")
 
 result = subprocess.run([
@@ -99,12 +95,9 @@ if not packets:
 
 print(f"  Total packets in capture: {len(packets)}")
 
-# ─────────────────────────────────────────
+
 # Step 2: Identify the TCP connection initiator
-# Use a tshark display filter to find the SYN packet (SYN=1, ACK=0).
-# This is more reliable than parsing raw flag fields, which tshark can
-# output inconsistently across versions.
-# ─────────────────────────────────────────
+
 syn_result = subprocess.run([
     'tshark', '-r', PCAP_FILE,
     '-T', 'fields',
@@ -134,18 +127,15 @@ else:
 print(f"  Initiator (Node B): {initiator_ip}")
 print(f"  Responder (Node A): {responder_ip}")
 
-# ─────────────────────────────────────────
+
 # Step 3: Separate data-bearing packets (tcp.len > 0)
-# Pure ACKs (tcp.len == 0) carry no application data and are excluded.
-# TCP SYN/SYN-ACK also have tcp.len == 0.
-# ─────────────────────────────────────────
+
 data_packets   = [p for p in packets if p['tcp_len'] > 0]
 from_initiator = [p for p in data_packets if p['src'] == initiator_ip]
 from_responder = [p for p in data_packets if p['src'] == responder_ip]
 
-# ─────────────────────────────────────────
 # Step 4: Print packet sequence table
-# ─────────────────────────────────────────
+
 print()
 print("=" * 72)
 print("HANDSHAKE PACKET SEQUENCE  (data packets only, tcp.len > 0)")
@@ -160,9 +150,9 @@ for p in data_packets:
         direction = f"Resp → Init  ({responder_ip})"
     print(f"  {p['num']:<6} {p['time']:<10.4f} {direction:<40} {p['frame_len']:>8} {p['tcp_len']:>12}")
 
-# ─────────────────────────────────────────
 # Step 5: Compute handshake metrics
-# ─────────────────────────────────────────
+
+
 init_first_tcp  = from_initiator[0]['tcp_len']   if from_initiator else None
 resp_first_tcp  = from_responder[0]['tcp_len']   if from_responder else None
 init_first_frm  = from_initiator[0]['frame_len'] if from_initiator else None
@@ -177,9 +167,9 @@ handshake_duration_ms = (max(all_times) - min(all_times)) * 1000 if all_times el
 symmetry_ratio = (resp_first_tcp / init_first_tcp
                   if (init_first_tcp and resp_first_tcp) else None)
 
-# ─────────────────────────────────────────
+
 # Step 6: Print metrics
-# ─────────────────────────────────────────
+
 print()
 print("=" * 72)
 print("HANDSHAKE METRICS")
@@ -230,7 +220,7 @@ PROTOCOLS = {
         'init_range':    (200,  600),
         'resp_range':    (1500, 10000),
         'ratio_range':   (3.0,  50.0),
-        'ratio_required': True,   # asymmetric ratio IS the defining TLS 1.3 feature
+        'ratio_required': True,
         'notes': [
             'ClientHello: ~200–600 bytes (ciphers, extensions, SNI).',
             'Server response: ServerHello + cert chain + Finished (~1.5–10 KB).',
@@ -267,8 +257,6 @@ for proto, spec in PROTOCOLS.items():
     resp_ok  = in_range(resp_first_tcp,   *spec['resp_range'])
     ratio_ok = in_range(symmetry_ratio,   *spec['ratio_range'])
     matched  = sum([init_ok, resp_ok, ratio_ok])
-    # If a protocol marks ratio_required=True, a failing ratio means INCONSISTENT
-    # regardless of size matches — the ratio IS the defining feature for that protocol.
     if spec.get('ratio_required', False) and not ratio_ok:
         verdict = 'INCONSISTENT'
     else:
@@ -288,9 +276,9 @@ for proto, spec in PROTOCOLS.items():
     for note in spec['notes']:
         print(f"    Note: {note}")
 
-# ─────────────────────────────────────────
+
 # Step 8: Summary
-# ─────────────────────────────────────────
+
 print()
 print("=" * 72)
 print("SUMMARY")
