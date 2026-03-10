@@ -149,11 +149,11 @@ data over the **private network**.
 ```bash
 # On Server 1 — note the private IP (usually eth1 on DigitalOcean)
 ip addr show eth1 | grep "inet "
-# Example: 10.110.0.3
+# Note down this IP as <SERVER1_PRIVATE_IP>
 
 # On Server 2
 ip addr show eth1 | grep "inet "
-# Example: 10.110.0.6
+# Note down this IP as <SERVER2_PRIVATE_IP>
 ```
 
 ### 3.2 Stop Node A before copying
@@ -184,7 +184,7 @@ rsync -av --progress \
   /nodes/nodeB/chainstate/
 ```
 
-Replace `<SERVER1_PRIVATE_IP>` with the actual private IP (e.g., `10.110.0.3`).
+Replace `<SERVER1_PRIVATE_IP>` with the private IP you noted in step 3.1.
 
 This transfer takes approximately 10–15 minutes over the private network.
 

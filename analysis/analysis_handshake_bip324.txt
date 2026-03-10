@@ -3,40 +3,40 @@ Analyzing handshake capture: /captures/mainnet/capture_bip324_handshake.pcap
 Step 1: Parsing pcap with tshark...
   Total packets in capture: 40
   TCP SYN confirmed — initiator identified from SYN packet
-  Initiator (Node B): 68.183.7.243
-  Responder (Node A): 68.183.7.14
+  Initiator (Node B): <NODE_B_IP>
+  Responder (Node A): <NODE_A_IP>
 
 ========================================================================
 HANDSHAKE PACKET SEQUENCE  (data packets only, tcp.len > 0)
 ========================================================================
   Pkt#   Time(s)    Direction                     Frame  TCP payload
   ------------------------------------------------------------------
-  4      0.0894     Init → Resp  (68.183.7.243)                  3850         3784
-  6      0.0897     Resp → Init  (68.183.7.14)                   2422         2356
-  8      0.0919     Init → Resp  (68.183.7.243)                   102           36
-  9      0.0986     Init → Resp  (68.183.7.243)                   201          135
-  11     0.0990     Resp → Init  (68.183.7.14)                    201          135
-  12     0.0990     Resp → Init  (68.183.7.14)                     99           33
-  13     0.0991     Resp → Init  (68.183.7.14)                     99           33
-  14     0.0994     Resp → Init  (68.183.7.14)                     99           33
-  16     0.0995     Init → Resp  (68.183.7.243)                    99           33
-  17     0.0996     Init → Resp  (68.183.7.243)                    99           33
-  19     0.1000     Init → Resp  (68.183.7.243)                    99           33
-  20     0.1002     Resp → Init  (68.183.7.14)                     96           30
-  21     0.1003     Resp → Init  (68.183.7.14)                     95           29
-  22     0.1005     Resp → Init  (68.183.7.14)                   1116         1050
-  24     0.1005     Resp → Init  (68.183.7.14)                     95           29
-  26     0.1012     Init → Resp  (68.183.7.243)                    99           33
-  27     0.1023     Resp → Init  (68.183.7.14)                   7306         7240
-  28     0.1023     Resp → Init  (68.183.7.14)                   7306         7240
-  30     0.1027     Resp → Init  (68.183.7.14)                   2556         2490
-  33     0.1038     Init → Resp  (68.183.7.243)                    96           30
-  34     0.1039     Init → Resp  (68.183.7.243)                    95           29
-  36     0.1042     Resp → Init  (68.183.7.14)                     95           29
-  37     0.1048     Init → Resp  (68.183.7.243)                  1116         1050
-  38     0.1050     Init → Resp  (68.183.7.243)                    95           29
-  39     0.1050     Resp → Init  (68.183.7.14)                    250          184
-  40     0.1065     Init → Resp  (68.183.7.243)                    95           29
+  4      0.0894     Init → Resp  (<NODE_B_IP>)                  3850         3784
+  6      0.0897     Resp → Init  (<NODE_A_IP>)                   2422         2356
+  8      0.0919     Init → Resp  (<NODE_B_IP>)                    102           36
+  9      0.0986     Init → Resp  (<NODE_B_IP>)                    201          135
+  11     0.0990     Resp → Init  (<NODE_A_IP>)                    201          135
+  12     0.0990     Resp → Init  (<NODE_A_IP>)                     99           33
+  13     0.0991     Resp → Init  (<NODE_A_IP>)                     99           33
+  14     0.0994     Resp → Init  (<NODE_A_IP>)                     99           33
+  16     0.0995     Init → Resp  (<NODE_B_IP>)                     99           33
+  17     0.0996     Init → Resp  (<NODE_B_IP>)                     99           33
+  19     0.1000     Init → Resp  (<NODE_B_IP>)                     99           33
+  20     0.1002     Resp → Init  (<NODE_A_IP>)                     96           30
+  21     0.1003     Resp → Init  (<NODE_A_IP>)                     95           29
+  22     0.1005     Resp → Init  (<NODE_A_IP>)                   1116         1050
+  24     0.1005     Resp → Init  (<NODE_A_IP>)                     95           29
+  26     0.1012     Init → Resp  (<NODE_B_IP>)                     99           33
+  27     0.1023     Resp → Init  (<NODE_A_IP>)                   7306         7240
+  28     0.1023     Resp → Init  (<NODE_A_IP>)                   7306         7240
+  30     0.1027     Resp → Init  (<NODE_A_IP>)                   2556         2490
+  33     0.1038     Init → Resp  (<NODE_B_IP>)                     96           30
+  34     0.1039     Init → Resp  (<NODE_B_IP>)                     95           29
+  36     0.1042     Resp → Init  (<NODE_A_IP>)                     95           29
+  37     0.1048     Init → Resp  (<NODE_B_IP>)                   1116         1050
+  38     0.1050     Init → Resp  (<NODE_B_IP>)                     95           29
+  39     0.1050     Resp → Init  (<NODE_A_IP>)                    250          184
+  40     0.1065     Init → Resp  (<NODE_B_IP>)                     95           29
 
 ========================================================================
 HANDSHAKE METRICS

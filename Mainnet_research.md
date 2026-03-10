@@ -114,10 +114,10 @@ message type, or the application-layer identity of peers.
 | Network | Bitcoin Mainnet |
 | Capture interface | eth0 on Server 1 (external NIC, public traffic) |
 | Transport | BIP-324 V2 encrypted (confirmed via `getpeerinfo`) |
-| Chain data transfer | rsync via private IP (10.110.0.3 → 10.110.0.6) |
-| Bitcoin connection | addnode uses Server 1's public IP (68.183.7.14:8333) |
-| Node A public IP | 68.183.7.14 |
-| Node B public IP | 68.183.7.243 |
+| Chain data transfer | rsync via private IP (Server 1 private IP → Server 2 private IP) |
+| Bitcoin connection | addnode uses Server 1's public IP on port 8333 |
+| Node A public IP | <redacted> |
+| Node B public IP | <redacted> |
 
 ### 3.2 Node A — Server 1 Configuration
 
@@ -129,10 +129,10 @@ message type, or the application-layer identity of peers.
 
 ### 3.3 Node B — Server 2 Configuration
 
-- Chain data bootstrapped via rsync from Server 1 over private IP (10.110.0.6)
+- Chain data bootstrapped via rsync from Server 1 over private IP
 - `prune=5000` (~5 GB disk usage)
 - `listen=0` (no inbound connections — outbound-only)
-- `addnode=68.183.7.14:8333` (connects to Node A via public IP)
+- `addnode=<NODE_A_IP>:8333` (connects to Node A via public IP)
 - `debug=net,mempool,cmpctblock`, `logtimemicros=1`
 - Data directory: `/nodes/nodeB`
 - **capture_001:** full-relay (default, no `blocksonly`)
